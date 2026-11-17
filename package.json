@@ -1,0 +1,47 @@
+{
+  "name": "darkydesk",
+  "version": "1.0.0",
+  "description": "DarkyDesk: local admin panel to serve a static website and publish it with a Cloudflare Quick Tunnel.",
+  "main": "src/main.js",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test \"test/*.test.js\"",
+    "dist": "electron-builder --win nsis portable",
+    "dist:web": "electron-builder --win nsis-web",
+    "pack": "electron-builder --win --dir"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "local.darkydesk.app",
+    "productName": "DarkyDesk",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "nsisWeb": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "appPackageUrl": "https://github.com/x02l/DarkyDesk/releases/download/v1.0.0/darkydesk-1.0.0-x64.nsis.7z"
+    }
+  },
+  "allowScripts": {
+    "electron@33.4.11": true
+  }
+}

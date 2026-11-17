@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DarkyDesk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <img class="logo" src="../../assets/logo.png" alt="DarkyDesk logo">
+    <div>
+      <h1>DarkyDesk</h1>
+      <p class="sub">Local admin panel &middot; publish a static website with a Cloudflare Quick Tunnel</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="cfg-h">
+      <h2 id="cfg-h">Website settings</h2>
+      <label for="folder">Website folder</label>
+      <div class="row">
+        <input id="folder" type="text" readonly placeholder="No folder selected" aria-describedby="folder-help">
+        <button id="pick" type="button">Browse…</button>
+      </div>
+      <p id="folder-help" class="hint">Only files inside this folder are served. The folder should contain an index.html.</p>
+
+      <label for="port">Local port (127.0.0.1 only)</label>
+      <div class="row">
+        <input id="port" type="number" min="1024" max="65535" value="8080" inputmode="numeric">
+      </div>
+
+      <div class="row cf">
+        <span class="hint" id="cf-path">cloudflared: auto-detect (bundled copy or PATH)</span>
+        <button id="pick-cf" type="button" class="ghost">Locate cloudflared.exe</button>
+      </div>
+
+      <div class="row actions">
+        <button id="start" type="button" class="primary">Start Server</button>
+        <button id="stop" type="button" class="danger" disabled>Stop Server</button>
+      </div>
+      <p id="alert" class="alert" role="alert" hidden></p>
+      <p id="warn" class="warn" role="status" hidden></p>
+    </section>
+
+    <section class="card" aria-labelledby="st-h">
+      <h2 id="st-h">Status</h2>
+      <dl class="grid" aria-live="polite">
+        <div><dt>Website</dt><dd><span id="web-dot" class="dot"></span><span id="web-text">Stopped</span></dd></div>
+        <div><dt>Tunnel</dt><dd><span id="tun-dot" class="dot"></span><span id="tun-text">Stopped</span></dd></div>
+        <div><dt>Local port</dt><dd id="port-text">&mdash;</dd></div>
+        <div><dt>Tunnel latency</dt><dd id="lat-text">&mdash;</dd></div>
+      </dl>
+      <label for="url">Public HTTPS URL</label>
+      <div class="row">
+        <input id="url" type="text" readonly value="" placeholder="Available after the tunnel connects">
+        <button id="copy" type="button" disabled>Copy</button>
+        <button id="open" type="button" disabled>Open</button>
+        <button id="open-local" type="button" disabled class="ghost">Open local</button>
+      </div>
+    </section>
+
+    <section class="card note" aria-labelledby="lim-h">
+      <h2 id="lim-h">Quick Tunnel limitations</h2>
+      <ul>
+        <li>The public URL (<code>*.trycloudflare.com</code>) is assigned randomly by Cloudflare and changes each time. You cannot choose its name or extension.</li>
+        <li>The public port is always HTTPS 443 and cannot be changed. Only the local port above is configurable.</li>
+        <li>Quick Tunnels carry HTTP/HTTPS websites only, not arbitrary TCP services.</li>
+        <li>Anyone with the URL can view the selected folder. This admin panel is never published.</li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="log-h">
+      <h2 id="log-h">cloudflared output</h2>
+      <pre id="log" tabindex="0" aria-label="cloudflared output log">No output yet.</pre>
+    </section>
+  </main>
+  <script src="renderer.js"></script>
+</body>
+</html>
